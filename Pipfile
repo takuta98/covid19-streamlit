@@ -5,8 +5,8 @@ name = "pypi"
 
 [packages]
 streamlit = "*"
-pandas = "*"
 matplotlib = "*"
+pandas = "~=1.3.5"
 
 [dev-packages]
 
