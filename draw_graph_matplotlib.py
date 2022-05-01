@@ -1,19 +1,8 @@
-from covid19 import *
 import matplotlib.pyplot as plt
 
 class DrawGraphMatplotlib():
     
-    PREFECTURE = {
-        '全国': ['ALL', 'Japan'],
-        '東京': ['Tokyo', 'Tokyo'],
-        '神奈川': ['Kanagawa', 'Kanagawa']
-    }
-    
-    def draw_bar_graph(self, prefecture):
-        c19d = Covid19Data()
-        data_df = c19d.get_new_cases_covid19(self.PREFECTURE[prefecture][0])
-        date_df = c19d.get_date()
-        
+    def draw_bar_graph(self, data_df, prefecture, pref_display):       
         fig = plt.figure(
             figsize=(10, 5),
             dpi=150,
@@ -26,11 +15,11 @@ class DrawGraphMatplotlib():
             111, 
             facecolor='black',
             xlabel='Date',
-            ylabel='PCR positive daily in ' + self.PREFECTURE[prefecture][1])
+            ylabel='PCR positive daily in ' + pref_display)
 
         ax.bar(
-            date_df, 
-            data_df,
+            data_df['Date'], 
+            data_df[prefecture],
             color='white')
         
         return fig
