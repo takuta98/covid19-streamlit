@@ -38,6 +38,7 @@ ax.bar(
     data_df,
     color='white')
 
+st.write
 st.pyplot(fig)
 
 
