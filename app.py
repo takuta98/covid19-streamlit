@@ -1,30 +1,46 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
+from covid19 import *
+import matplotlib.pyplot as plt
 
-st.title('Sample App')
+st.title('Covid-19 graph by Streamlit')
 
-if st.button('Click me!'):
-    st.write('Clicked!')
-    
-if st.checkbox('Please check!'):
-    st.write('Checked!')
-    
-options = st.multiselect(
-    'What are your favorite colors',
-    ['Green', 'Yellow', 'Red', 'Blue'],
-    ['Yellow', 'Red']
-)
+prefecture_selectbox = st.selectbox(
+    '県を選択してください。',
+    ('全国', '東京', '神奈川'))
 
-st.write('You selected:', options)
+prefecture = {
+    '全国': ['ALL', 'Japan'],
+    '東京': ['Tokyo', 'Tokyo'],
+    '神奈川': ['Kanagawa', 'Kanagawa']
+}
+        
+c19d = Covid19Data()
+data_df = c19d.get_new_cases_covid19(prefecture[prefecture_selectbox][0])
+date_df = c19d.get_date()
 
-left_col, right_col = st.columns(2)
 
-left_number = left_col.slider('Pick a Num', 0, 100, 50)
-right_col.write(f'Number: {left_number}')
+fig = plt.figure(
+    figsize=(10, 5),
+    dpi=150,
+    facecolor='orange',
+    edgecolor='black',
+    linewidth=5,
+    tight_layout=True)
 
-number = st.sidebar.slider('Pick a Num', 0, 100, 40)
-st.sidebar.write(f'Number: {number}')
+ax = fig.add_subplot(
+    111, 
+    facecolor='black',
+    xlabel='Date',
+    ylabel='PCR positive daily in '+prefecture[prefecture_selectbox][1])
+
+ax.bar(
+    date_df, 
+    data_df,
+    color='white')
+
+st.pyplot(fig)
+
+
 
 # streamlit hello
 # streamlit run app.py
