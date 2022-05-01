@@ -1,6 +1,3 @@
-import locale
-locale.setlocale(locale.LC_TIME, 'ja_JP.UTF-8')
-
 class LatestInfo():
     def get_latest_info(self, data_df, prefecture, pref_name):
         latest_date = data_df.loc[:, 'Date'].iloc[-1].strftime('%Y年%m月%d日（%a）')
